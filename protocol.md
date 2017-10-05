@@ -1,22 +1,49 @@
 # State sync protocol
 
-Sync protocol is simple
+Sync protocol based on events fying between client and server.
 
-## **Subscribe**
+## <a name="clientRequests"></a>Client requests
+All client requests have unique numeric id autoincremented on each client event.
 
-Client can subscribe to sync area with server. Only area name is required. Server respond with init event. Init event provides all information required to start using area by ui components.
+### <a name="subscribeRequest"></a>Subscribe request
+Client can subscribe part of client state to be synchronized with  area on server side. Server respond with [Subcribe response](#subscrbeResponse) with all information required to start using area by ui components.
 
-```
-function test() {
-  console.log("notice the blank line before this function?");
+> ```javascript
+{
+  id: 1, // unique id
+  type: "subscribe", // event type
+  area: "myArea", // area name
 }
 ```
 
-## **Unsubscribe**
+### <a name="unsubscribeRequest"></a>**Unsubscribe**
+Client can unsubscribe area and stop syncronization at any time. If you need to pause/resume just unsubscribe and subscribe again.
 
-Client can unsubscribe from sync at any time. If you need to pause/resume just unsubscribe and subscribe again.
+> ```javascript
+{
+  id: 231, // unique id
+  type: "unsubscribe", // event type
+  area: "myArea", // area name
+}
+```
 
-## **Client patch**
+### **Client patch**
+State sync detects client changes and send [json patch](https://tools.ietf.org/html/rfc6902) event to server.
 
-next
+> ```javascript
+{
+  id: 4002, // unique id
+  type: "patch", // event type
+  area: "myArea", // area name
+  patch: [
+    {op:"replace", path:"/settings/watch"}
+  ]
+}
+```
+
+## Server events
+Server respond with event on client 
+
+
+
 
