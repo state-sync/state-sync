@@ -6,6 +6,12 @@ Sync protocol is simple
 
 Client can subscribe to sync area with server. Only area name is required. Server respond with init event. Init event provides all information required to start using area by ui components.
 
+```
+function test() {
+  console.log("notice the blank line before this function?");
+}
+```
+
 ## **Unsubscribe**
 
 Client can unsubscribe from sync at any time. If you need to pause/resume just unsubscribe and subscribe again.
