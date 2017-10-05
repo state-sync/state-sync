@@ -8,7 +8,7 @@ All client requests have unique numeric id autoincremented on each client event.
 ### <a name="subscribeRequest"></a>Subscribe request
 Client can subscribe part of client state to be synchronized with  area on server side. Server respond with [Subcribe response](#subscrbeResponse) with all information required to start using area by ui components.
 
-> ```javascript
+```javascript
 {
   id: 1, // unique id
   type: "subscribe", // event type
@@ -19,7 +19,7 @@ Client can subscribe part of client state to be synchronized with  area on serve
 ### <a name="unsubscribeRequest"></a>**Unsubscribe**
 Client can unsubscribe area and stop syncronization at any time. If you need to pause/resume just unsubscribe and subscribe again.
 
-> ```javascript
+```javascript
 {
   id: 231, // unique id
   type: "unsubscribe", // event type
@@ -30,7 +30,7 @@ Client can unsubscribe area and stop syncronization at any time. If you need to 
 ### **Client patch**
 State sync detects client changes and send [json patch](https://tools.ietf.org/html/rfc6902) event to server.
 
-> ```javascript
+```javascript
 {
   id: 4002, // unique id
   type: "patch", // event type
@@ -38,6 +38,19 @@ State sync detects client changes and send [json patch](https://tools.ietf.org/h
   patch: [
     {op:"replace", path:"/settings/watch"}
   ]
+}
+```
+### **Client signal**
+Client sends 
+
+```javascript
+{
+  id: 123, // unique id
+  type: "signal", // event type
+  signal: "update", // signal name
+  parameters: {
+    name: "John"
+  }
 }
 ```
 
