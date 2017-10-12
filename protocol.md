@@ -48,6 +48,26 @@ Client subscribes area of client state to be synchronized with area on server si
 }
 ```
 
+### <a name="subscribeResponse"></a>Subscribe response
+Server respond to successful client subscription request with subscription response. 
+
+```javascript
+{
+  forId: 1, // unique id of request
+  type: "areaSubscription", // event type
+  area: "myArea", // area name,
+  config: {
+    clientLocalPrefix: "$";
+    clientPush: [ "/" ]; // prefixes
+    timeout: 6000 //  signals timeout
+  },
+  model: {
+    // initial area model
+  }
+}
+```
+
+
 ### <a name="unsubscribeRequest"></a>**Unsubscribe**
 Client can unsubscribe area and stop syncronization at any time. If you need to pause/resume just unsubscribe and subscribe again.
 
