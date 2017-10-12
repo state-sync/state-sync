@@ -84,10 +84,10 @@ Error codes
 - 'accessDenied' - Access is denied for user
 - 'alreadySubscribed' - Area is already subscribed in this session
 
-# <a name="unsubscribe"></a>Unsubscribe
-Client can unsubscribe area and stop syncronization at any time. If you need to pause/resume just unsubscribe and subscribe again.
+# <a name="areUnsubscribe"></a>Area unsubscribe
+Client can unsubscribe area and stop synchronization at any time. If you need to pause/resume just unsubscribe and subscribe again. Please note that there is no error message. Area always can be unsubscribed.
 
-### <a name="unsubscribeRequest"></a>Request
+## <a name="areaUnsubscribeRequest"></a>Request
 Client send unsubscribe event to server.
 
 ```javascript
@@ -97,7 +97,7 @@ Client send unsubscribe event to server.
   area: "myArea", // area name
 }
 ```
-## <a name="unsubscribeResponse"></a>Response
+## <a name="areaUnsubscribeResponse"></a>Response
 Server respond with confirmation on unsubcribe request.
 
 ```javascript
@@ -108,8 +108,11 @@ Server respond with confirmation on unsubcribe request.
 }
 ```
 
-### **Client patch**
-State sync detects client changes and send [json patch](https://tools.ietf.org/html/rfc6902) event to server.
+# Client patch
+State sync detects client changes and send [json patch](https://tools.ietf.org/html/rfc6902) event to server. Server 
+respond with server patch event followed by patch response. Two events are required to simplify client sync logic.
+
+## Patch request 
 
 ```javascript
 {
@@ -121,8 +124,9 @@ State sync detects client changes and send [json patch](https://tools.ietf.org/h
   ]
 }
 ```
-### **Client signal**
-Client sends 
+
+# Signal
+Client sends signals to server with parameters. Server handle signal, sync area by [server patch](#serverPatch) event followed by [signal response](#signalResponse).
 
 ```javascript
 {
@@ -135,8 +139,6 @@ Client sends
 }
 ```
 
-## Server events
-Server respond with event on client 
 
 
 
