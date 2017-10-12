@@ -37,7 +37,7 @@ All client requests have unique, numeric and auto incremented **id** property. R
 ## <a name="subscription"></a>Area subscription
 All client requests have unique numeric id auto incremented on each client event.
 
-### <a name="subscribeRequest"></a>Subscribe request
+### <a name="subscribeRequest"></a>Request
 Client subscribes area of client state to be synchronized with area on server side. Server respond with [Subscribe response](#subscribeResponse) with all information required to start using area by ui components.
 
 ```javascript
@@ -48,7 +48,7 @@ Client subscribes area of client state to be synchronized with area on server si
 }
 ```
 
-### <a name="subscribeResponse"></a>Subscribe response
+### <a name="subscribeResponse"></a>Response
 Server respond to successful client subscription request with subscription response. 
 
 ```javascript
@@ -57,8 +57,8 @@ Server respond to successful client subscription request with subscription respo
   type: "areaSubscription", // event type
   area: "myArea", // area name,
   config: {
-    clientLocalPrefix: "$";
-    clientPush: [ "/" ]; // prefixes
+    clientLocalPrefix: "$"; // client do not push changes in properties started with '$'
+    clientPush: [ "/" ]; // prefixes for data pushed to server
     timeout: 6000 //  signals timeout
   },
   model: {
@@ -67,6 +67,22 @@ Server respond to successful client subscription request with subscription respo
 }
 ```
 
+### <a name="subscribeResponse"></a>Error
+Server respond with error if area do not exists of access denied. 
+
+```javascript
+{
+  forId: 1, // unique id of request
+  type: "areaSubscriptionError", // event type
+  area: "myArea", // area name,
+  error: "accessDenied"
+}
+```
+
+Error codes
+- 'unknownArea' - Area is unknown
+- 'accessDenied' - Access is denied for user
+- 'alreadySubscribed' - Area is already subscribed in this session
 
 ### <a name="unsubscribeRequest"></a>**Unsubscribe**
 Client can unsubscribe area and stop syncronization at any time. If you need to pause/resume just unsubscribe and subscribe again.
