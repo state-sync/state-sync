@@ -2,7 +2,7 @@
 
 Sync protocol based on async events.
 
-## <a name="eventInit"></a>Initialization
+# <a name="eventInit"></a>Initialization
 Client subscribes to stomp '/root' channel and receive initialization event. Initialization event provides protocol version and access tokens for user and session. These tokens used internally to route events between user sessions.
 
 ```javascript
@@ -17,7 +17,7 @@ After receiving init event, client subscribes to additional Stomp channels in or
 - /session/e0242 server will send session specific events to this channel.
 - /account/92beb server will send user specific events to this channel.
 
-## <a name="requestResponse"></a>Request / Response model
+# <a name="requestResponse"></a>Request / Response model
 All client requests have unique, numeric and auto incremented **id** property. Response for request have **forId** property.
 
 ```javascript
@@ -34,10 +34,10 @@ All client requests have unique, numeric and auto incremented **id** property. R
 
 ```
 
-## <a name="subscription"></a>Area subscription
+# <a name="subscription"></a>Area subscription
 All client requests have unique numeric id auto incremented on each client event.
 
-### <a name="subscribeRequest"></a>Request
+## <a name="subscribeRequest"></a>Request
 Client subscribes area of client state to be synchronized with area on server side. Server respond with [Subscribe response](#subscribeResponse) with all information required to start using area by ui components.
 
 ```javascript
@@ -48,7 +48,7 @@ Client subscribes area of client state to be synchronized with area on server si
 }
 ```
 
-### <a name="subscribeResponse"></a>Response
+## <a name="subscribeResponse"></a>Response
 Server respond to successful client subscription request with subscription response. 
 
 ```javascript
@@ -67,7 +67,7 @@ Server respond to successful client subscription request with subscription respo
 }
 ```
 
-### <a name="subscribeResponse"></a>Error
+## <a name="subscribeResponse"></a>Error
 Server respond with error if area do not exists of access denied. 
 
 ```javascript
@@ -84,14 +84,27 @@ Error codes
 - 'accessDenied' - Access is denied for user
 - 'alreadySubscribed' - Area is already subscribed in this session
 
-### <a name="unsubscribeRequest"></a>**Unsubscribe**
+# <a name="unsubscribe"></a>Unsubscribe
 Client can unsubscribe area and stop syncronization at any time. If you need to pause/resume just unsubscribe and subscribe again.
+
+### <a name="unsubscribeRequest"></a>Request
+Client send unsubscribe event to server.
 
 ```javascript
 {
   id: 231, // unique id
   type: "unsubscribe", // event type
   area: "myArea", // area name
+}
+```
+## <a name="unsubscribeResponse"></a>Response
+Server respond with confirmation on unsubcribe request.
+
+```javascript
+{
+  forId: 1, // unique id of request
+  type: "areaUnsubscription", // event type
+  area: "myArea", // area name,
 }
 ```
 
