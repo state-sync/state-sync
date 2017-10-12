@@ -1,12 +1,44 @@
 # State sync protocol
 
-Sync protocol based on events fying between client and server.
+Sync protocol based on async events.
 
-## <a name="clientRequests"></a>Client requests
-All client requests have unique numeric id autoincremented on each client event.
+## <a name="eventInit"></a>Initialization
+Client subscribes to stomp '/root' channel and receive initialization event. Initialization event provides protocol version and access tokens for user and session. These tokens used internally to route events between user sessions.
+
+```javascript
+{
+  version: "1.0", // unique id
+  userToken: "92beb", // user token
+  sessionToken: "e0242", // session token
+}
+```
+After receiving init event, client subscribes to additional Stomp channels in order to receive session and user events.
+
+- /session/e0242 server will send session specific events to this channel.
+- /account/92beb server will send user specific events to this channel.
+
+## <a name="requestResponse"></a>Request / Response model
+All client requests have unique, numeric and auto incremented **id** property. Response for request have **forId** property.
+
+```javascript
+// client request
+{
+  id: "12",
+  ...
+}
+// server response
+{
+  forId: "12",
+  ...
+}
+
+```
+
+## <a name="subscription"></a>Area subscription
+All client requests have unique numeric id auto incremented on each client event.
 
 ### <a name="subscribeRequest"></a>Subscribe request
-Client can subscribe part of client state to be synchronized with  area on server side. Server respond with [Subcribe response](#subscrbeResponse) with all information required to start using area by ui components.
+Client subscribes area of client state to be synchronized with area on server side. Server respond with [Subscribe response](#subscribeResponse) with all information required to start using area by ui components.
 
 ```javascript
 {
