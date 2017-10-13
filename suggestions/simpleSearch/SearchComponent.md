@@ -1,12 +1,12 @@
 # React component pattern
 
-Use this pattern for the top level components with Redux state.
+Use this pattern for the top level components with Redux state. This component sync search field with server and show results as simple bullet list.
 
 ```typescript
 import { StateSync } from '@state-sync/js-client';
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
-import { AREA_TEST, TestState } from '../../store/test';
+import { AREA_TEST, TestState, ResultItem } from '../../store/test';
 
 // get area reference
 const area = StateSync().area(AREA_TEST);
@@ -52,6 +52,7 @@ class Component extends React.Component<Props & Actions> {
         const {data, bindSearch} = this.props;
         return (
             <Input value={data.search} onChange={bindSearch}/>
+            <ul>{data.results.map((item: ResultItem) => (<li>{result.text}</li>)}</ul>
         );
     }
 }
