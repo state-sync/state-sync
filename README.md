@@ -12,6 +12,6 @@ State sync is the architecture designed to sync client state with server side.
 
 # Best practices
 
-* [Permissions](suggestions/permissions.md)
+* [Permissions](suggestions/Permissions.md)
 
 
