@@ -1,4 +1,4 @@
-#Data permissions
+# Data permissions
 
 Common patterns of permissions.
 
