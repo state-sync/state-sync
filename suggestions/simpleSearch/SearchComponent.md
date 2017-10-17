@@ -58,8 +58,8 @@ class Component extends React.Component<Props & Actions> {
 }
 
 // connect to Redux
-const DriverListComponent = connect<Model, Actions>(PropsBuilder, ActionsBuilder)(Component);
+const WrappedComponent = connect<Model, Actions>(PropsBuilder, ActionsBuilder)(Component);
 
 // export actual component
-export default DriverListComponent;
+export default WrappedComponent;
 ```
